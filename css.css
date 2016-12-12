@@ -1,0 +1,16 @@
+body{
+  text-align: center;
+}
+#break p, #pomodoro p {
+  display: inline;
+  margin:5px;
+}div #break  , div #pomodoro {
+  display: inline;
+  margin:50px;
+}
+span {
+  cursor:pointer;
+}
+#timer {
+  margin:50px;
+}
