@@ -1,19 +1,112 @@
+@import url('https://fonts.googleapis.com/css?family=Molle:400i');
+html{
+  background: url(http://www.highreshdwallpapers.com/wp-content/uploads/2011/07/WallPaper-HD-3067.jpg) no-repeat center center fixed;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}
 body{
   text-align: center;
+
+}
+h1{
+  font-family: 'Molle', cursive;
+  color:red;
+  font-size: 45px;
 }
 #break p, #pomodoro p {
   display: inline;
   margin:5px;
-}div #break  , div #pomodoro {
-  display: inline;
-  margin:20px 50px;
+  font-size: 20px;
 }
-span {
+div #break  , div #pomodoro {
+  display: inline;
+  margin:20px 10vw;
+  color:white;
+  text-shadow: 1px 1px black;
+
+}
+
+#pomodoro span , #break span {
+
+  font-size: 20px;
   cursor:pointer;
+  color:orange;
 }
 #timer {
   margin:50px;
+  font-size: 50px;
 }
 button {
-  margin:10px 50px;
+  margin:10px 5vw;
+  color: grey;
+  background: rgba(0,0,0,0.8);
+  width:75px;
+  height:75px;
+  border-radius: 100%;
+}
+.btns button {
+  margin:10px 10vw;
+}
+button:hover {
+  background-color: white;
+}
+/* css for the timer's progress bar
+*/
+.timerBox{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.timerBox span {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: rgba(0,0,0,0.8);
+  border:2px solid black;
+  width:150px;
+  height:150px;
+  border-radius: 100%;
+  transform:  rotate(45deg);
+}
+p#timer{
+  color:white;
+  transform: rotate(-45deg);
+}
+@keyframes progressRotation {
+  0%{
+
+  }
+  25%{
+    border-top-color:red;
+
+  }
+  50%{
+    border-top-color:red;
+    border-right-color:red;
+
+  }
+  75%{
+    border-top-color:red;
+    border-right-color:red;
+    border-bottom-color:red;
+  }
+  100%{
+    border-top-color:red;
+    border-right-color:red;
+    border-bottom-color:red;
+    border-left-color:red;
+  }
+}
+footer a {
+  color:orange;
+}
+footer{
+  margin-top: 50px;
+}
+footer p {
+  margin:0;
+  font-size:10px;
+  font-weight: 900;
 }

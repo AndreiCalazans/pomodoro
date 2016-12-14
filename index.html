@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title id="name">Pomodoro Clock</title>
     <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
   </head>
   <body>
 
@@ -15,29 +16,34 @@
 
     <div class="controls">
       <div class="btns">
-        <button type="button" class="btn" id="break">Break</button>
+        <button type="button" class="btn" id="breakControl">Break</button>
         <button type="button" class="btn" id = "pomo">Pomodoro</button>
       </div>
       <div id="break">
-        <span id="break-">-</span> <p id="breaktime">05:00</p><span id="break+"> +</span>
+        <span id="breakControl-" class="fa fa-minus"></span> <p id="breakControltime">05:00</p><span id="breakControl+" class="fa fa-plus"></span>
       </div>
       <div class="" id="pomodoro">
 
-           <span id="pomo-">- </span><p id="pomotime">25:00</p><span id="pomo+"> +</span>
+           <span id="pomo-" class="fa fa-minus"></span><p id="pomotime">25:00</p><span id="pomo+" class="fa fa-plus"></span>
       </div>
     </div>
-    <div class="" >
 
-          <p id="timer">25:00</p>
+      <div class="timerBox" >
 
-    </div>
+           <span id="progressBar"> <p id="timer">25:00</p></span>
+
+      </div>
+
     <div class="controls">
       <button type="button" id="start" onClick="count()">Start</button>
       <button type="button" id="pause" onClick="stop()">Pause</button>
-      <button type="button" id="reset">Reset</button>
+      <button type="button" id="reset" onClick="reset()">Reset</button>
     </div>
 
-
+  <footer><p>Learn more about the Pomodoro technique <a href="http://cirillocompany.de/pages/pomodoro-technique">Here</a></p>
+    <p>Developed By <a href="https://andreicalazans.github.io/">Andrei Calazans</a> </p>
+    <p>With Vanila JS</p>
+  </footer>
   </body>
 </html>
 <script type="text/javascript" src="js.js">

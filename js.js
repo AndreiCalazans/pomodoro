@@ -7,7 +7,7 @@
 //function to add or substract numbers from timers.
 var span = document.getElementsByTagName("span");
 var alarm = new Audio();
-alarm.src = "alarm.wav";
+alarm.src = "alarm2.mp3";
 /*
 this was a first attempt to understand how to add
 plusPomo.addEventListener("click",function(){
@@ -64,9 +64,10 @@ for (var j = 0 ; j < btn.length ; j++){
 }
 // make the counter, take the info inside the timer and when the button start is pressed start a function to count.
 var timeOut;
+var time;
 function count(){
 
-  var time = document.getElementById("timer").innerHTML;
+  time = document.getElementById("timer").innerHTML;
   // when you get the time its comes with ":" use slice to remove it. then add it together.
   var minutes = parseInt(time.slice(0,2));
   var seconds = parseInt(time.slice(3,5));
@@ -77,14 +78,18 @@ function count(){
   // function counter iterates through the number while its biggger than zero,
   // substracting the value in the time set by the timeToCount
 
+  // initiate the animation by implementing the css style animation
+  document.getElementById("progressBar").style.animation = "progressRotation "+ timeToCount+"s linear "+ timeToCount*0.1 +"s 1 normal forwards";
+
 console.log(timeToCount);
 counter();
   function counter(){
     if (timeToCount == 0){
       document.getElementById("timer").innerHTML = "00:00";
       alarm.play();
-      alert("Time is up !!!");
-      alarm.pause();
+      alert("time is up!");
+
+
 
     }else if (timeToCount > 0){
       timeToCount--;
@@ -94,12 +99,18 @@ counter();
       mins = (mins < 10) ? "0"+ mins : mins;
       document.getElementById("timer").innerHTML = mins+":"+secs;
       document.getElementById("name").innerHTML = mins+":"+secs + " Timer";
-      timeOut = setTimeout(counter,100);
+      timeOut = setTimeout(counter,1000);
     }
   }
 }
 // function to stop the clock and resume if pressed start again.
 function stop(){
+    document.getElementById("progressBar").style.animationPlayState = "paused";
   clearTimeout(timeOut);
 }
-// need to make sound when time is over...
+//reset function will return the clock to the previous timeCount.
+function reset(){
+    document.getElementById("progressBar").style.animation = 0;
+  stop();
+  document.getElementById("timer").innerHTML = time;
+}
