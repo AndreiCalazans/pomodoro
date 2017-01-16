@@ -1,116 +1,175 @@
-// pomodoro clock
-// create timer
-// can adjust values of the timer
-// two timers one for pomodoro clock , another for the break
 
+///variables;///////////////////////////////////////////////////
+const closedSettings = document.getElementById("close");
+const openSettings = document.getElementById("open");
+var timer = document.getElementById("timer");
+var inputs = Array.prototype.slice.call( document.getElementsByTagName("input") );
+var sound = new Audio;
+sound.src = "pling.mp3"
+var interval = false;
+var workTime = true;
+var innerMsg = document.getElementById("msg");
+var breakTime = 5 ;
+var quantityOfPomos = 2 ;
+var tomato = '<i class="fa fa-check-circle-o"></i>';
+var tomoMsg = document.getElementsByClassName("tomomsg");
+var tomosIcon = document.getElementsByClassName("tomos");
+var totalTimeLeft;
+var timeChosen;
+var timeout;
+var playing = true;
+var btnSection = document.getElementsByClassName("play");
+var completed = 0;
+var headerMsg = document.getElementsByTagName("title");
 
-//function to add or substract numbers from timers.
-var span = document.getElementsByTagName("span");
-var alarm = new Audio();
-alarm.src = "alarm2.mp3";
-/*
-this was a first attempt to understand how to add
-plusPomo.addEventListener("click",function(){
-  var value = document.getElementById("pomotime").innerHTML;
-  value = parseInt(value);
-  value ++;
-  document.getElementById("pomotime").innerHTML = value + ":00";
-})
-*/
-// get the id of the span you are clicking on....
+/////////////////////////////////functions///////////////////
+//// start sequence//////
+function changeTurns(){
 
-for (var i = 0 ; i < span.length ; i++){
-  span[i].addEventListener("click", function(){
-    var id = this.id;
+ // it must go one pomo then one break
+ if(workTime){
+   var duration = inputs[0].value < 10 ? "0"+inputs[0].value : inputs[0].value;
+   timer.innerHTML = duration+":00";
+ }else{
+   var duration = inputs[1].value < 10 ? "0"+inputs[1].value : inputs[1].value;
+   timer.innerHTML = duration+":00";
+ }
+};
 
-    var spanClicked = document.getElementById(id);
-
-       // after you get the element clicked you can run the adding or substracting function
-
-         // substract the minus and plus sign from the id so you can target the id to modify.
-         var idToChange = id.substr(0 , id.length-1);
-
-         var value = document.getElementById(idToChange+"time").innerHTML;
-         value = parseInt(value);
-
-          if(id[id.length-1] == "+"){
-            //if it has + then add
-            if (value == 60){
-              document.getElementById(idToChange+"time").innerHTML = "60:00";
-            }else {
-            value ++;
-            document.getElementById(idToChange+"time").innerHTML = value +":00";
-            }
-          }else if( id[id.length -1] == "-"){
-            //if the last is - then subtract
-            if(value == 0){
-               document.getElementById(idToChange+"time").innerHTML = "0:00";
-            }else{
-            value -- ;
-            document.getElementById(idToChange+"time").innerHTML = value +":00";
-            }
-          }
-
-  })
-}
-// transfer the information inside the break and pomodoro time to the timer so you can start the counting...
-var btn = document.getElementsByClassName("btn");
-for (var j = 0 ; j < btn.length ; j++){
-  btn[j].addEventListener("click", function(){
-
-    var valueInside = document.getElementById(this.id+"time").innerHTML;
-    document.getElementById("timer").innerHTML = valueInside;
-  })
-}
-// make the counter, take the info inside the timer and when the button start is pressed start a function to count.
-var timeOut;
-var time;
-function count(){
-
-  time = document.getElementById("timer").innerHTML;
-  // when you get the time its comes with ":" use slice to remove it. then add it together.
-  var minutes = parseInt(time.slice(0,2));
-  var seconds = parseInt(time.slice(3,5));
-  var totalTimeInSeconds = (minutes*60)+seconds;
-
-  var timeToCount = totalTimeInSeconds;
-
-  // function counter iterates through the number while its biggger than zero,
-  // substracting the value in the time set by the timeToCount
-
-  // initiate the animation by implementing the css style animation
-  document.getElementById("progressBar").style.animation = "progressRotation "+ timeToCount+"s linear "+ timeToCount*0.1 +"s 1 normal forwards";
-
-console.log(timeToCount);
-counter();
-  function counter(){
-    if (timeToCount == 0){
-      document.getElementById("timer").innerHTML = "00:00";
-      alarm.play();
-      alert("time is up!");
-
-
-
-    }else if (timeToCount > 0){
-      timeToCount--;
-      var mins = Math.floor(timeToCount/60);
-      var secs = Math.floor(timeToCount%60)
-      secs = (secs < 10) ? "0"+ secs : secs;
-      mins = (mins < 10) ? "0"+ mins : mins;
-      document.getElementById("timer").innerHTML = mins+":"+secs;
-      document.getElementById("name").innerHTML = mins+":"+secs + " Timer";
-      timeOut = setTimeout(counter,1000);
-    }
+///timeCounter
+////////////////////////////////////////
+function play(){
+  if(workTime){
+   innerMsg.innerHTML = "Focus Time!";
+  }else if(interval){
+    innerMsg.innerHTML = "Break Time";
   }
+
+  // pause();
+  // btnSection[0].innerHTML = '<div onClick="restart()" id="btnPlay"><p>Restart</p></div>';
+  // innerMsg.innerHTML = "Congrats you completed your Pomodoro, Restart everything";
+
+  btnSection[0].innerHTML = '<div onClick="pause()" id="btnPlay"><p>Pause</p></div><div onClick="reset()" id="btnPlay"><p >Reset</p></div>';
+  updateIconsColor();
+  timeCounter();
+
+
 }
-// function to stop the clock and resume if pressed start again.
-function stop(){
-    document.getElementById("progressBar").style.animationPlayState = "paused";
-  clearTimeout(timeOut);
+///////////////////////////////////////////////////////////////
+function restart(){
+   innerMsg.innerHTML = "Focus Time!";
+  reset();
+  completed = 0;
+  updateIconsColor();
+
+};
+///////////////////////////////////////////////////////
+function makeOneMoreIcon(){
+  tomosIcon[0].innerHTML += tomato;
+};
+////////////////////////////////////////////////////////
+function updateIconsColor(){
+  var tomosIconEach = document.querySelectorAll(".tomos i");
+  for(var i = 0 ; i < completed ; i++){
+    tomosIconEach[i].style.color ="green";
+  }
+
+  tomoMsg[0].innerHTML = " You've completed " + completed + " of "+quantityOfPomos+" Pomodoros!"
 }
-//reset function will return the clock to the previous timeCount.
+//////////////////////////////////////////////////////////
+
+function timeCounter(){
+var time = timer.innerHTML;
+totalTimeLeft = Number(time.substr(0,2)) + Number(time.substr(3,4)/60);
+ timeout = setTimeout(counter, 100);
+}
+//////////////////////////////////////////
+function pause(){
+  clearTimeout(timeout);
+  btnSection[0].innerHTML = '<div onClick="play()" id="btnPlay"><p>Play</p></div>';
+
+}
+//////////////// timeCounter and counter work together
+function counter(){
+  if(totalTimeLeft > 0){
+    totalTimeLeft -= 0.01;
+  }
+  if(totalTimeLeft == 0){
+    sound.play();
+    if(workTime){
+      completed++
+    };
+    updateIconsColor();
+    workTime = workTime ? workTime = false: workTime = true;
+    interval = workTime ? interval = false: interval = true;
+
+    if(workTime && completed == quantityOfPomos){
+     btnSection[0].innerHTML = '<div onClick="restart()" id="btnPlay"><p>Restart</p></div>';
+     innerMsg.innerHTML = "Congrats you completed your Pomodoro, Restart everything";
+     tomosIcon[0].innerHTML = "";
+     quantityOfPomos =inputs[2].value;
+    for(var i = 0 ; i < inputs[2].value ; i++ ){
+      tomosIcon[0].innerHTML += tomato;
+      }
+     return;
+    }
+    changeTurns();
+    pause();
+    return ;
+
+  }
+  var minute = Math.floor(totalTimeLeft);
+  var seconds = Math.floor(totalTimeLeft%1 * 60);
+  minute = minute < 10 ? "0"+minute : minute;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  timer.innerHTML = minute +":"+seconds;
+  headerMsg[0].innerHTML = minute +":"+seconds;
+
+  timeCounter();
+}
+//////////////////////////////////////////////////
 function reset(){
-    document.getElementById("progressBar").style.animation = 0;
-  stop();
-  document.getElementById("timer").innerHTML = time;
+  pause();
+  if(workTime){
+    var value = inputs[0].value < 10 ? "0"+inputs[0].value+":00" : inputs[0].value+":00";
+    timer.innerHTML = value ;
+  }else{
+    var value = inputs[1].value < 10 ? "0"+inputs[1].value+":00" : inputs[1].value+":00";
+    timer.innerHTML = value ;
+  }
+};
+//////////////////////////////////////////////////
+
+function update(){
+
+ if(this.name === "minutes"){
+   var minute = this.value < 10? "0"+this.value : this.value;
+   timer.innerHTML = minute+":00";
+ }else if(this.name === "break"){
+   breakTime = this.value;
+ }else {
+   tomosIcon[0].innerHTML = "";
+   quantityOfPomos = this.value;
+  for(var i = 0 ; i < this.value ; i++ ){
+    tomosIcon[0].innerHTML += tomato;
+    }
+
+ }
+ updateIconsColor();
 }
+
+
+
+//events///////////////////////////////////////////////
+openSettings.addEventListener("click" , function(){
+  document.querySelector(".options").style.opacity = "1";
+ document.querySelector(".options").style.zIndex = "5";
+})
+closedSettings.addEventListener( "click", function(){
+  document.querySelector(".options").style.opacity = "0";
+document.querySelector(".options").style.zIndex = "-1";
+});
+
+inputs.forEach(function(e){
+  e.addEventListener("change",update);
+})

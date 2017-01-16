@@ -2,48 +2,74 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="Description" content="Pomodoro by andrei calazans">
+    <meta name="keywords" content="Pomodoro timer, andrei calazans">
+    <meta name="author" content="andrei calazans">
+    <meta name='viewport' content="width= device-width , initial-scale = 1.0">
     <title id="name">Pomodoro Clock</title>
     <link rel="stylesheet" href="css.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
   </head>
   <body>
+    <div class="container">
+      <div class="box">
+        <!-- options -->
+          <div class="options">
+            <div>
+              <span id="close" class="fa fa-times"></span>
+            </div>
+         <h4>Settings</h4>
+            <p>Minutes per pomodoro</p>
+            <input type="number" min="1" name="minutes" value="25" />
+            <p>Minutes per break</p>
+            <input type="number" name="break" min="0" value="5"/>
+            <p>Pomodoro per session</p>
+            <input type="number" name="pomos" min="1" value="2" />
+        </div>
+        <div class="front">
+            <div>
+              <span id="open" class="fa fa-cog"></span>
+            </div>
+
+        <h1>Pomodoro Timer</h1>
+
+        <div class="timerBox" >
+        <p id="msg">Focus Time!</p>
+         <p id="timer">25:00</p>
+          </div>
+          <div class="play">
+            <div onClick="play()" id="btnPlay">
+                   <p >Play</p>
+           </div>
+
+          </div>
 
 
-    <div class="">
-      <h1>Pomodoro Timer</h1>
+          <div class="pomotimes">
+            <div class="tomos">
+              <i class="fa fa-check-circle-o"></i>
+              <i class="fa fa-check-circle-o"></i>
+            </div>
+            <div class="tomomsg">
+              You've completed 0 of 2 Pomodoros!
+            </div>
+
+
+          </div>
+
+          </div>
+
+      </div>
+      <footer>
+        <p>Made by <a href="" style="color:red">Andrei Calazans</a></p>
+        <div class="custom-tweet-button">
+  <a href="https://twitter.com/intent/tweet?url=http://codepen.io/alistairtweedie/&amp;text=Twitter check out this Pomodoro timer !" target="_blank" alt ="Tweet this">
+    <i class="btn-icon"></i>
+    <span class="btn-text">Tweet</span>
+  </a>
+</div>
+      </footer>
     </div>
-
-
-    <div class="controls">
-      <div class="btns">
-        <button type="button" class="btn" id="breakControl">Break</button>
-        <button type="button" class="btn" id = "pomo">Pomodoro</button>
-      </div>
-      <div id="break">
-        <span id="breakControl-" class="fa fa-minus"></span> <p id="breakControltime">05:00</p><span id="breakControl+" class="fa fa-plus"></span>
-      </div>
-      <div class="" id="pomodoro">
-
-           <span id="pomo-" class="fa fa-minus"></span><p id="pomotime">25:00</p><span id="pomo+" class="fa fa-plus"></span>
-      </div>
-    </div>
-
-      <div class="timerBox" >
-
-           <span id="progressBar"> <p id="timer">25:00</p></span>
-
-      </div>
-
-    <div class="controls">
-      <button type="button" id="start" onClick="count()">Start</button>
-      <button type="button" id="pause" onClick="stop()">Pause</button>
-      <button type="button" id="reset" onClick="reset()">Reset</button>
-    </div>
-
-  <footer><p>Learn more about the Pomodoro technique <a href="http://cirillocompany.de/pages/pomodoro-technique">Here</a></p>
-    <p>Developed By <a href="https://andreicalazans.github.io/">Andrei Calazans</a> </p>
-    <p>With Vanila JS</p>
-  </footer>
   </body>
 </html>
 <script type="text/javascript" src="js.js">
