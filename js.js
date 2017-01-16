@@ -81,7 +81,7 @@ function updateIconsColor(){
 function timeCounter(){
 var time = timer.innerHTML;
 totalTimeLeft = Number(time.substr(0,2)) + Number(time.substr(3,4)/60);
- timeout = setTimeout(counter, 100);
+ timeout = setTimeout(counter, 1000);
 }
 //////////////////////////////////////////
 function pause(){
